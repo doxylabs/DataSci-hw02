@@ -14,23 +14,35 @@ library(digest)
 #         subsequent calls.
 
 makeCacheMatrix <- function(x = matrix()) {
-    hsh<-digest(NULL) # store the hash of the matrix passed to me in case it changes
-#     dir(hsh)
-#     h=digest("abc")
-#     if(hsh!=h) print("ok")
-    set<-function(y=matrix())
+    dirty<-TRUE
+    
+    #     dir(hsh)
+    #     h=digest("abc")
+    #     if(hsh!=h) print("ok")
+    
+    set<-function(y=matrix()){
         x <<- y # the parent value of x is set with set(y)
+        dirty <<- TRUE
+    }
     
-    get<-function()        x # return x
+    get<-function()
+        x # return x
     
-    getHash<-function()        return(hsh) # return the hash
-
-    setHash<-function(h=character())        hsh <<- h
+    setInverse<-function(y=matrix()){
+        xInv<<-y
+        dirty<<-FALSE
+    }
+    
+    getInverse<-function()
+        return(xInv)
+        
+    isDirty<-function() return(dirty)
     
     list(set=set,
          get=get,
-         getHash=getHash,
-         setHash=setHash
+         isDirty=isDirty,
+         getInverse=getInverse,
+         setInverse=setInverse
     )
 }
 
@@ -44,12 +56,10 @@ makeCacheMatrix <- function(x = matrix()) {
 # cache.
 
 cacheSolve <- function(x, ...) {
-    if( makeCacheMatrix$getHash() != digest(x) )
-    {
-        makeCacheMatrix$setHash(digest(x))
-        makeCacheMatrix$set(solve(x))
-    }
-    return (makeCacheMatrix$get())
+    if(x$isDirty())
+        x$setInverse(solve(x$get()))
+    else
+        message("Returning cached inverse.")
+        
+    return (x$getInverse())
 }
-
-
