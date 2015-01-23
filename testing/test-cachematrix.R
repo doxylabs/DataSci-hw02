@@ -1,6 +1,10 @@
-## test-cachematrix
+## test-cachematrix 
 
-source("hw02/cachematrix.R")
+#NOTE: the working directory is one level above this, so you don't need to source
+#from ../ in RStudio. I'm sure this is different if you are running from Rscript
+#on the cli.
+
+source("cachematrix.R")
 # no-output
 
 x<-makeCacheMatrix(matrix(c(1,0,0,  0,1,0,  1,0,1),3,3))

@@ -1,7 +1,18 @@
-# datasci
-Spot for Data Science SigTrack
-=======
-### Introduction
+# Homework Assignment Two
+
+This is the second assignment for the r-programming class. The file you are looking for is
+
+```
+cachematrix.R
+```
+
+I tested the functions using the testing/test-cachematrix.R script. If you are running this from the command line, you may need to change the source() command to source from the parent directory. ie source("../cachematrix.R"). If you are using RStudio, it'll do the right thing...
+
+The original README.md follows (with some annotations)...
+
+- - - 
+
+## Introduction
 
 This second programming assignment will require you to write an R
 function that is able to cache potentially time-consuming computations.
@@ -15,7 +26,7 @@ Programming Assignment you will take advantage of the scoping rules of
 the R language and how they can be manipulated to preserve state inside
 of an R object.
 
-### Example: Caching the Mean of a Vector
+## Example: Caching the Mean of a Vector
 
 In this example we introduce the `<<-` operator which can be used to
 assign a value to an object in an environment that is different from the
@@ -70,11 +81,11 @@ function.
 ```
 how to use this:
 ```
-source("hw02/cachemean.R")
+source("cachemean.R")
 x<-makeVector(c(1,2,3,4,5,6,8,9))
-x$get()
-x$
-c<-cachemean(x)
+cachemean(x) # calculate the mean()
+cachemean(x) # return the cached version
+cachemean(x) # again, return the cached version
 ```
 
 ### Assignment: Caching the Inverse of a Matrix
